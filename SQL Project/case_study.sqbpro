@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="G:/Data Science/advanced track/New folder/case_study.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="125"/><column_width id="3" width="1475"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,14:mainadmission_data"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1">select sum (c)total_gen
+from (SELECT gender ,count(*)c
+from admission_data
+where major = 'Physics' 
+GROUP by gender )as counts 
+
+SELECT gender , count(*)c ,major
+from admission_data
+where major = 'Physics' 
+GROUP by gender 
+UNION
+SELECT gender , count(*)c , major 
+from admission_data
+where major = 'Chemistry' 
+GROUP by gender 
+
+
+
+with fc as(
+SELECT gender , count(*) as female_counts
+from admission_data
+where gender = 'female' and major = 'Chemistry'
+GROUP by gender 
+order by female_counts),
+
+fa as ( select gender , count(*)as female_admit
+from admission_data
+where gender = 'female' and admitted = 'True' AND major = 'Chemistry'
+GROUP by gender 
+order by female_admit)
+
+SELECT ((fa.female_admit+0.000000000001)/fc.female_counts )as f_rate_prc
+from fc
+join fa
+on fc.gender=fa.gender ;
+
+
+with mc as (select gender , count(*) male_count
+from admission_data
+where gender = 'male' AND major = 'Chemistry'
+GROUP by gender 
+order by male_count),
+
+ma as (select gender , count(*) male_admit
+from admission_data
+where gender = 'male' AND admitted = 'True' AND major = 'Chemistry'
+GROUP by gender 
+order by male_admit)
+SELECT ((ma.male_admit+0.000001)/mc.male_count ) as m_rate
+from mc
+join ma
+on mc.gender=ma.gender ;
+
+
+</sql><sql name="SQL 1 (1)">
+SELECT student_id, gender , count(*) as female_counts
+from admission_data
+where gender = 'female'
+GROUP by gender 
+order by female_counts
+
+select gender , count(*)as female_admit
+from admission_data
+where gender = 'female' and admitted = 'True'
+GROUP by gender 
+order by female_admit
+
+
+
+
+
+
+
+
+
+
+select gender , count(*) male_count
+from admission_data
+where gender = 'male' AND admitted = 'True'
+GROUP by gender 
+order by male_count
+</sql><current_tab id="0"/></tab_sql></sqlb_project>
