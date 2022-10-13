@@ -90,7 +90,7 @@ ORDER BY 2 DESC
 LIMIT 10 ;
  
 
-/* Query 6 */ Use your query to return the email, first name, last name of listners and count of all Rock Music tracks.Return your list ordered alphabetically by email address starting with A.
+/* Query 6 */ /*Use your query to return the email, first name, last name of listners and count of all Rock Music tracks.Return your list ordered alphabetically by email address starting with A.*/
 
 SELECT DISTINCT
   c.EMAIL,
@@ -110,6 +110,33 @@ JOIN GENRE g
 WHERE g.NAME = 'Rock'
 GROUP BY 2,3
 ORDER BY 1;
+
+/*Query 7 What is the most popular music gener in each country?*/
+-- the most popular music gener is determined by the highest purchases (the number of invoiceline)
+with 
+t1 as(SELECT c.country,g.Name as gener,count(*) as purchase_per_gener
+FROM invoiceline il
+JOIN invoice as i
+ON i.InvoiceId = il.InvoiceId
+JOIN customer as c
+ON c.CustomerId = i.CustomerId
+JOIN track as t 
+ON t.TrackId = il.TrackId
+JOIN genre as g 
+ON g.GenreId = t.GenreId
+group by 1,2
+order by 3 desc),
+--then we get the max number of gener invoiceline for each country to make sure that we get the "highest per country"
+t2 as (select max(purchase_per_gener)as max_gener_per_country,country
+from t1
+group by 2
+order by 1 desc)
+--this is essential since we only interseted in one highest gener for one country  
+SELECT t1.*
+from t1
+join t2 on t1.Country = t2.Country
+where t1.purchase_per_gener = t2.max_gener_per_country 
+
 
 
 
