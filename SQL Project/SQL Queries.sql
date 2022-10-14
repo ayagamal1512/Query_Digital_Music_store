@@ -47,7 +47,7 @@ GROUP BY Country) t2
 WHERE t1.TotalSpent = t2.TotalSpent
 ORDER BY Country;
 
-/* Query 4 */ Write a query that returns the Artist name and total track count of the top 10 rock bands.
+/* Query 4  Write a query that returns the Artist name and total track count of the top 10 rock bands.*/
 
  SELECT
   al.NAME AS Album_name,
@@ -65,7 +65,7 @@ ORDER BY 2 DESC
 LIMIT 10 ;
 
 
-* Query 5 */ find which artist has earned the most according to the InvoiceLines?
+/* Query 5  find which artist has earned the most according to the InvoiceLines?*/
 
 SELECT
   t2.NAME AS artist_name,
@@ -90,7 +90,8 @@ ORDER BY 2 DESC
 LIMIT 10 ;
  
 
-/* Query 6 */ /*Use your query to return the email, first name, last name of listners and count of all Rock Music tracks.Return your list ordered alphabetically by email address starting with A.*/
+/* Query 6 */ /*Use your query to return the email, first name, last name of listners and count of all Rock Music tracks.
+Return your list ordered alphabetically by email address starting with A.*/
 
 SELECT DISTINCT
   c.EMAIL,
@@ -136,6 +137,38 @@ SELECT t1.*
 from t1
 join t2 on t1.Country = t2.Country
 where t1.purchase_per_gener = t2.max_gener_per_country 
+
+/*Query 8 who are the top ranked artists in each year ?
+-- the top earning artists we previously fitched in query 5 we will just add years to it then we rank the results and group by the year*/
+
+with earning_artist as(
+SELECT
+  t1.artist_name,
+  SUM(total_sold) AS grand_total , year
+FROM(
+  SELECT
+  a.NAME as artist_name,
+  il.UNITPRICE *il.QUANTITY*i.Total as total_sold , strftime('%Y',i.InvoiceDate) as year
+FROM ARTIST a
+JOIN ALBUM al
+  ON a.ARTISTID = al.ARTISTID
+JOIN TRACK t
+  ON al.ALBUMID = t.ALBUMID
+JOIN INVOICELINE il
+  ON t.TRACKID = il.TRACKID
+join Invoice i 
+on il.InvoiceId = i.InvoiceId
+GROUP by 1,3
+ORDER BY 1 DESC) AS t1
+GROUP BY 1,3
+ORDER BY 2 DESC)
+
+select artist_name ,grand_total, rank()over(PARTITION by artist_name order by grand_total desc) as rank , year
+from earning_artist
+group by year;
+
+ 
+
 
 
 
