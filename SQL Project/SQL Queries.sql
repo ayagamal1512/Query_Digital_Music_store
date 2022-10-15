@@ -1,4 +1,4 @@
-/* Query 1 */ Which countries have the most Invoices for each unit price?
+/* Query 1 Which countries have the most Invoices for each unit price?*/
 
 SELECT
   i.BillingCountry, il.UnitPrice,
@@ -20,7 +20,7 @@ GROUP BY city
 ORDER BY total_invoices DESC
 LIMIT 1;
 
-/* Query 3 */  Write a query that determines the customer that has spent the most on music for each country. 
+/* Query 3   Write a query that determines the customer that has spent the most on music for each country.*/ 
 
 WITH t1
 AS (SELECT
