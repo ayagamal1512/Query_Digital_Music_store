@@ -47,7 +47,7 @@ Cities that woild be interseted based on the total invoices are **Prague** and *
 ![](https://github.com/ayagamal1512/Query_Digital_Music_store/blob/main/SQL%20Project/images/Picture6.png)
 
 7. **who are the top ranked artists in each year ?**
-   These are the **number 1** top earning musitions in each year
+   These are the **number 1** top earning musicians in each year
    
 ![](https://github.com/ayagamal1512/Query_Digital_Music_store/blob/main/SQL%20Project/images/Capture.PNG)
 
