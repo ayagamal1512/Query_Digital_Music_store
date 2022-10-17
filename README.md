@@ -1,7 +1,7 @@
 # Query_Digital_Music_store 
 
 used **SQL** to query **Chinok music store** to answer business related questions, gain insights about the digital music store from `2009` to `2013`
-for optimizing business opportunities, also used excel povit charts for clear visualization 
+for optimizing business opportunities, also used excel pivot charts for clear visualization 
 **Here is the schema for Chiok_db**
 [cridit](https://github.com/lerocha/chinook-database/wiki/Chinook-Schema) 
 ![](https://raw.githubusercontent.com/ptyadana/data-analysis-digital-music-store/master/ChinookSchema.png)
